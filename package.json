@@ -1,0 +1,28 @@
+{
+  "name": "donkeycocms",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HeviDevi/DonkeyCoCMS.git"
+  },
+  "keywords": [
+    "CMS",
+    "CLI",
+    "SQL",
+    "PostgreSQL"
+  ],
+  "author": "Devon \"HeviDevi\" Ross",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HeviDevi/DonkeyCoCMS/issues"
+  },
+  "homepage": "https://github.com/HeviDevi/DonkeyCoCMS#readme",
+  "dependencies": {
+    "inquirer": "^9.2.22"
+  }
+}
