@@ -1,8 +1,8 @@
 require('dotenv').config()
 const {Pool} = require('pg');
-chosenFirstName = ''
-chosenLastName = ' '
-chosenRole = 
+chosenFirstName = 'Henry'
+chosenLastName = 'The Horse'
+chosenRole = 4
 chosenManager = 13
 
 
