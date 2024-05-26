@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/HeviDevi/DonkeyCoCMS#readme",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "inquirer": "^9.2.22",
     "pg": "^8.11.5"
   }
