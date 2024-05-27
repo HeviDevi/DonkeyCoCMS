@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -24,7 +25,7 @@
   "homepage": "https://github.com/HeviDevi/DonkeyCoCMS#readme",
   "dependencies": {
     "dotenv": "^16.4.5",
-    "inquirer": "^9.2.22",
+    "inquirer": "^8.2.4",
     "pg": "^8.11.5"
   }
 }

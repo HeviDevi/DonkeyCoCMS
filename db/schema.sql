@@ -1,5 +1,5 @@
-CREATE DATABASE donkey_company_db;
-\c donkey_company_db;
+CREATE DATABASE donkey_company_db
+\c donkey_company_db
 
 CREATE TABLE employee (
     id SERIAL PRIMARY KEY,
@@ -19,4 +19,4 @@ CREATE TABLE role(
 CREATE TABLE department(
     id SERIAL PRIMARY KEY,
     name VARCHAR(30) UNIQUE NOT NULL
-)
+);
