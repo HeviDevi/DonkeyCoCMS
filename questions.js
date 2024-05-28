@@ -5,6 +5,7 @@ start = [
       message: "What would you like to do?",
       choices: [
         "View All Employees",
+        "View Employees by Department",
         "Add Employee",
         "Update Employee Role",
         "View All Roles",
@@ -17,7 +18,9 @@ start = [
     },
   ];
 
-const addEmployeeQuestions = [
+  //Questions in CRUD order
+  //Create
+const addEmployeeQ= [
     {
       type: "input",
       name: "first_name",
@@ -48,7 +51,7 @@ const addEmployeeQuestions = [
     },
   ];
 
-const addRoleQuestions = [
+const addRoleQ = [
     {
     type: "input",
     name: "title",
@@ -65,7 +68,7 @@ const addRoleQuestions = [
     message: "What is the department id of the new role?",
     },
 ];
-const addDepartmentQuestion = [
+const addDepartmentQ = [
     {
         type: "input",
         name: "department_name",
@@ -73,7 +76,25 @@ const addDepartmentQuestion = [
     },
 ];
 
-const updateEmployeeRoleQuestions = [
+//Read
+const viewEmployeesByDepartmentQ = [
+    {
+      type: "list",
+      name: "department_name",
+      message: "Which department would you like to view?",
+      choices: [
+        "Management",
+        "Sales",
+        "Marketing",
+        "Accounting",
+        "Human Resources",
+        "Legal",
+      ]
+    },
+];
+
+//Update
+const updateEmployeeRoleQ = [
     {
       type: "input",
       name: "employee_id",
@@ -99,7 +120,8 @@ const updateEmployeeRoleQuestions = [
     }
   ];
 
-  upstateNewYorkVacationSelectionQuestion = [
+//Delete
+  upstateNewYorkVacationSelectionQ= [
     {
         type: "input", 
         name: "employee_id",
@@ -117,4 +139,4 @@ const updateEmployeeRoleQuestions = [
 
 
 
-    module.exports = { start, addEmployeeQuestions, addRoleQuestions, addDepartmentQuestion, updateEmployeeRoleQuestions, upstateNewYorkVacationSelectionQuestion}
+    module.exports = { start, addEmployeeQ, addRoleQ, addDepartmentQ, viewEmployeesByDepartmentQ, updateEmployeeRoleQ,  upstateNewYorkVacationSelectionQ}

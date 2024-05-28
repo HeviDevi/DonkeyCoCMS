@@ -1,5 +1,5 @@
 const inquirer = require('inquirer');
-const { addEmployee, addRole, addDepartment, viewEmployees, viewRoles, viewDepartments, updateEmployeeRole, removeEmployee } = require('./app')
+const { addEmployee, addRole, addDepartment, viewEmployees, viewEmployeesByDepartment, viewRoles, viewDepartments, updateEmployeeRole, removeEmployee } = require('./app')
 
 
 
@@ -7,24 +7,35 @@ const { addEmployee, addRole, addDepartment, viewEmployees, viewRoles, viewDepar
 
 
  function startPrompt() {
-    console.log('Welcome to the Employee Tracker!');
+    console.log(`           
+    W                        
+   W   <|__<|"       Hank the Donkey (CED)
+  W     00==|" 
+ W     / __,|-------------_
+|_|===''/  |             /||
+           |__  _____   / ||
+             |||     |||  WW 
+             |||     |||   
+__M____M____//,]____//,]_________M_`);
 inquirer.prompt(start).then((answers) => {
     if (answers.action === 'View All Employees') {
         viewEmployees().then(startPrompt);
+    } else if (answers.action === 'View Employees by Department') {
+        viewEmployeesByDepartment().then(startPrompt);    
     } else if (answers.action === 'Add Employee') {
-        addEmployee();
+        addEmployee().then(startPrompt);
     } else if (answers.action === 'Update Employee Role') {
-        updateEmployeeRole();
+        updateEmployeeRole().then(startPrompt);
     } else if (answers.action === 'View All Roles') {
         viewRoles().then(startPrompt);
     } else if (answers.action === 'Add Role') {
-        addRole();
+        addRole().then(startPrompt);
     } else if (answers.action === 'View All Departments') {
         viewDepartments().then(startPrompt);
     } else if (answers.action === 'Add Department') {
-        addDepartment();
+        addDepartment().then(startPrompt);
     } else if (answers.action === 'Fire Employee') {
-        removeEmployee();
+        removeEmployee().then(startPrompt);
     } else if (answers.action === 'Exit') {
         process.exit();
     }
