@@ -1,5 +1,5 @@
 const inquirer = require('inquirer');
-const {viewEmployees, addEmployee, updateEmployeeRole, viewRoles, viewDepartments} = require('./app')
+const { addEmployee, addRole, addDepartment, viewEmployees, viewRoles, viewDepartments, updateEmployeeRole, removeEmployee } = require('./app')
 
 
 

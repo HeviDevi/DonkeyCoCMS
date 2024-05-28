@@ -1,7 +1,7 @@
 require("dotenv").config();
 const inquirer = require("inquirer");
 const { Pool } = require("pg");
-const { addEmployeeQuestions, updateEmployeeRoleQuestions } = require("./questions");
+const { addEmployeeQuestions, addRoleQuestions, addDepartmentQuestion, updateEmployeeRoleQuestions, upstateNewYorkVacationSelectionQuestion } = require("./questions");
 
 const pool = new Pool({
   database: "donkey_company_db",
@@ -35,7 +35,6 @@ function addEmployee() {
 
     try {
       console.log("Adding a new employee");
-
       const client = await pool.connect();
       const employeeData = await client.query(
         `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ($1, $2, $3, $4) RETURNING *`,
@@ -51,18 +50,40 @@ function addEmployee() {
     }
   });
 }
-//add role
-async function addRole(addRoleQuestions) {
-  try{} catch (err) {
+//Create a role
+async function addRole() {
+  inquirer.prompt(addRoleQuestions).then(async (answers) => {
+    let {title, salary, department_id} = answers;
+  try {
+    console.log("Adding a new role (I hope an animal gets this one)");
+    const client = await pool.connect();
+    const roleData = await client.query(
+      `INSERT INTO role (title, salary, department_id) VALUES ($1, $2, $3) RETURNING *`,
+      [title, salary, department_id]
+    );
+    console.table(roleData.rows);
+    console.log(`Added ${title} to the database, Time for some new hires!`);
+  } catch (err) {
     console.log(err);
   }
-}  
-//add department
+} 
+)}; 
+//create a department
 async function addDepartment() {
-  try{} catch (err) {
+  inquirer.prompt(addDepartmentQuestion).then(async (answers) => {
+    let {department_name} = answers;
+  try {
+    console.log("Adding a new department (To be fully staffed by live animals)");
+    const client = await pool.connect();
+    const departmentData = await client.query(
+      `INSERT INTO department (name) VALUES ($1) RETURNING *`,
+      [department_name]
+    );
+  } catch (err) {
     console.log(err);
   }
 }
+)};
 
 
 //Read
@@ -109,10 +130,10 @@ async function viewDepartments() {
 }
 
 //Update
-//Update an employee's role... TODO: & manager
+//Update an employee's role & manager
 function updateEmployeeRole() {
   inquirer.prompt(updateEmployeeRoleQuestions).then(async (answers) => {
-    const {employee_id, role_id, manager_id} = answers;
+    let {employee_id, role_id, manager_id} = answers;
     if (manager_id === "Hank the Donkey (CED)") {
       manager_id = 1;
     } else if (manager_id === "Rodger the Rooster (Sales Manager)") {
@@ -129,7 +150,7 @@ function updateEmployeeRole() {
     try {
       const client = await pool.connect();
       const employeeData = await client.query(
-        `UPDATE employee SET role_id = $2 WHERE id = $1 RETURNING * UPDATE employee SET manager_id = $3 WHERE id = $1 RETURNING *`,
+        `UPDATE employee SET role_id = $2, manager_id = $3 WHERE id = $1 RETURNING *`,
         [employee_id, role_id, manager_id]
       );
       console.table(employeeData.rows);
@@ -143,11 +164,22 @@ function updateEmployeeRole() {
 //Delete
 //Remove an employee
 async function removeEmployee() {
-  try{} catch (err) {
+  inquirer.prompt(upstateNewYorkVacationSelectionQuestion).then(async (answers) => {
+  let { employee_id } = answers;
+  try{
+    const client = await pool.connect();
+    const employeeData = await client.query(
+      `DELETE FROM employee WHERE id = $1 RETURNING *`,
+      [employee_id]
+    );
+    console.table(employeeData.rows);
+    console.log(`Enjoy your new life in upstate New York! Beautiful this time of year!`);
+  } catch (err) {
     console.log(err);
   }
+});
 } 
 
 
 
-module.exports = { viewEmployees, addEmployee, updateEmployeeRole, viewRoles, viewDepartments };
+module.exports = {addEmployee, addRole, addDepartment, viewEmployees, viewRoles, viewDepartments, updateEmployeeRole, removeEmployee};

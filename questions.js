@@ -1,3 +1,21 @@
+start = [
+    {
+      type: "list",
+      name: "action",
+      message: "What would you like to do?",
+      choices: [
+        "View All Employees",
+        "Add Employee",
+        "Update Employee Role",
+        "View All Roles",
+        "Add Role",
+        "View All Departments",
+        "Add Department",
+        "Fire Employee",
+        "Exit",
+      ],
+    },
+  ];
 
 const addEmployeeQuestions = [
     {
@@ -30,8 +48,30 @@ const addEmployeeQuestions = [
     },
   ];
 
-const addRoleQuestions = [];
-const addDepartmentQuestions = [];
+const addRoleQuestions = [
+    {
+    type: "input",
+    name: "title",
+    message: "What is the title of the new role?",
+    }, 
+    {
+    type: "input",
+    name: "salary",
+    message: "What is the salary of the new role?",
+    },
+    {
+    type: "input",
+    name: "department_id",
+    message: "What is the department id of the new role?",
+    },
+];
+const addDepartmentQuestion = [
+    {
+        type: "input",
+        name: "department_name",
+        message: "What is the name of the new department?",
+    },
+];
 
 const updateEmployeeRoleQuestions = [
     {
@@ -58,26 +98,23 @@ const updateEmployeeRoleQuestions = [
         ],
     }
   ];
-  
-  start = [
+
+  upstateNewYorkVacationSelectionQuestion = [
     {
-      type: "list",
-      name: "action",
-      message: "What would you like to do?",
-      choices: [
-        "View All Employees",
-        "Add Employee",
-        "Update Employee Role",
-        "View All Roles",
-        "Add Role",
-        "View All Departments",
-        "Add Department",
-        "Fire Employee",
-        "Exit",
-      ],
-    },
-  ];
+        type: "input", 
+        name: "employee_id",
+        message: "Which employee would you like to send on a permanent (unpaid) vacation to upstate New York? (ENTER EMPLOYEE ID)",
+        validate: function(answer) {
+            if (isNaN(answer) === false) {
+                return true;
+            }
+            return false;
+        }
+    }
+  ]
+  
+ 
 
 
 
-    module.exports = {addEmployeeQuestions, updateEmployeeRoleQuestions, start}
+    module.exports = { start, addEmployeeQuestions, addRoleQuestions, addDepartmentQuestion, updateEmployeeRoleQuestions, upstateNewYorkVacationSelectionQuestion}
