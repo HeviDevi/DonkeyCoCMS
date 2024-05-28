@@ -1,5 +1,5 @@
 const inquirer = require('inquirer');
-const {viewEmployees, addEmployee, updateEmployeeRole, viewRoles} = require('./app')
+const {viewEmployees, addEmployee, updateEmployeeRole, viewRoles, viewDepartments} = require('./app')
 
 
 
@@ -16,14 +16,16 @@ inquirer.prompt(start).then((answers) => {
     } else if (answers.action === 'Update Employee Role') {
         updateEmployeeRole();
     } else if (answers.action === 'View All Roles') {
-        viewRoles();
+        viewRoles().then(startPrompt);
     } else if (answers.action === 'Add Role') {
         addRole();
     } else if (answers.action === 'View All Departments') {
-        viewDepartments();
+        viewDepartments().then(startPrompt);
     } else if (answers.action === 'Add Department') {
         addDepartment();
-    } else {
+    } else if (answers.action === 'Fire Employee') {
+        removeEmployee();
+    } else if (answers.action === 'Exit') {
         process.exit();
     }
 

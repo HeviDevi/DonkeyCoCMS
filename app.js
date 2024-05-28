@@ -1,6 +1,7 @@
 require("dotenv").config();
 const inquirer = require("inquirer");
 const { Pool } = require("pg");
+const { addEmployeeQuestions, updateEmployeeRoleQuestions } = require("./questions");
 
 const pool = new Pool({
   database: "donkey_company_db",
@@ -10,70 +11,10 @@ const pool = new Pool({
   port: 5432,
 });
 
+//CRUD functions.
+//Create, Read, Update & Delete functions in that order. To be called in the if then statment in server.js
 
-const addEmployeeQuestions = [
-  {
-    type: "input",
-    name: "first_name",
-    message: "What is their first name?",
-  },
-  {
-    type: "input",
-    name: "last_name",
-    message: "What is their last name?",
-  },
-  {
-    type: "input",
-    name: "role_id",
-    message: "What is their role id?",
-  },
-  {
-    type: "list",
-    name: "manager_id",
-    message: "Who is their manager?",
-    choices: [
-      "Hank the Donkey (CED)",
-      "Rodger the Rooster (Sales Manager)",
-      "Bruce the Bear (Marketing Manager)",
-      "Molly the Mouse (Accounting Manager)",
-      "Patricia the Pig (HR Manager)",
-      "Gary the Goat (Legal Counsel)",
-    ],
-  },
-];
-
-const updateEmployeeRoleQuestions = [
-  {
-    type: "input",
-    name: "employee_id",
-    message: "What is their employee id?",
-  },
-  {
-    type: "input",
-    name: "role_id",
-    message: "what is their new role id?",
-  },
-];
-
-start = [
-  {
-    type: "list",
-    name: "action",
-    message: "What would you like to do?",
-    choices: [
-      "View All Employees",
-      "Add Employee",
-      "Update Employee Role",
-      "View All Roles",
-      "Add Role",
-      "View All Departments",
-      "Add Department",
-      "Exit",
-    ],
-  },
-];
-
-//TODO: add parameterized queries for the following
+//Create
 //Add an employee
 function addEmployee() {
   inquirer.prompt(addEmployeeQuestions).then(async (answers) => {
@@ -110,25 +51,21 @@ function addEmployee() {
     }
   });
 }
-
-//Update an employee's role and manager
-function updateEmployeeRole() {
-  inquirer.prompt(updateEmployeeRoleQuestions).then(async (answers) => {
-    const {employee_id, role_id} = answers;
-    try {
-      const client = await pool.connect();
-      const employeeData = await client.query(
-        `UPDATE employee SET role_id = $2 WHERE id = $1 RETURNING *`,
-        [employee_id, role_id]
-      );
-      console.table(employeeData.rows);
-      console.log(`Updated employee with id ${employee_id} to role id ${role_id}`)
-    } catch (err) {
-      console.log(err);
-    }
-  });
+//add role
+async function addRole(addRoleQuestions) {
+  try{} catch (err) {
+    console.log(err);
+  }
+}  
+//add department
+async function addDepartment() {
+  try{} catch (err) {
+    console.log(err);
+  }
 }
 
+
+//Read
 //View all employees
 const viewEmployees = async () => {
   try {
@@ -156,8 +93,61 @@ async function viewRoles() {
   console.error(err);
 }
 }
-//add role
-//View all departments
-//add department
 
-module.exports = { viewEmployees, addEmployee, updateEmployeeRole, viewRoles };
+//View all departments
+async function viewDepartments() {
+  try {
+    console.log("Here are our current hard working departments (staffed entirely by live animals):")
+    //Connect to the database
+    const client = await pool.connect();
+    // Get & Display Department Data
+    const departmentData = await client.query("SELECT * FROM department");
+    console.table(departmentData.rows);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+//Update
+//Update an employee's role... TODO: & manager
+function updateEmployeeRole() {
+  inquirer.prompt(updateEmployeeRoleQuestions).then(async (answers) => {
+    const {employee_id, role_id, manager_id} = answers;
+    if (manager_id === "Hank the Donkey (CED)") {
+      manager_id = 1;
+    } else if (manager_id === "Rodger the Rooster (Sales Manager)") {
+      manager_id = 2;
+    } else if (manager_id === "Bruce the Bear (Marketing Manager)") {
+      manager_id = 4;
+    } else if (manager_id === "Molly the Mouse (Accounting Manager)") {
+      manager_id = 6;
+    } else if (manager_id === "Patricia the Pig (HR Manager)") {
+      manager_id = 7;
+    } else if (manager_id === "Gary the Goat (Legal Counsel)") {
+      manager_id = 9;
+    }
+    try {
+      const client = await pool.connect();
+      const employeeData = await client.query(
+        `UPDATE employee SET role_id = $2 WHERE id = $1 RETURNING * UPDATE employee SET manager_id = $3 WHERE id = $1 RETURNING *`,
+        [employee_id, role_id, manager_id]
+      );
+      console.table(employeeData.rows);
+      console.log(`Updated employee with id ${employee_id} to role id ${role_id} their new manager's id is ${manager_id}`)
+    } catch (err) {
+      console.log(err);
+    }
+  });
+}
+
+//Delete
+//Remove an employee
+async function removeEmployee() {
+  try{} catch (err) {
+    console.log(err);
+  }
+} 
+
+
+
+module.exports = { viewEmployees, addEmployee, updateEmployeeRole, viewRoles, viewDepartments };
