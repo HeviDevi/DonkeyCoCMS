@@ -45,6 +45,3 @@ inquirer.prompt(start).then((answers) => {
 
 startPrompt();
 
-//Import Parameterized Queries from app.js
-//create inquirer prompts
-//create if then statements for each prompt that will call the appropriate function
