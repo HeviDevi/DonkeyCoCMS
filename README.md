@@ -38,5 +38,5 @@ Special thanks to the creators of the `inquirer` and `pg` npm packages.
 
 ## Artwork
 
-
+![](/assets/TheBoss.png)
 
