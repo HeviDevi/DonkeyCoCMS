@@ -35,7 +35,7 @@ Special thanks to the creators of the `inquirer` and `pg` npm packages.
 
 
 ## Video Demo
-
+https://drive.google.com/file/d/1h6RZcwiOWF_xlHzxnGH_zEXIXWtoiMte/view  
 ## Artwork
 
 ![](/assets/TheBoss.png)
