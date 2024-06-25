@@ -8,10 +8,11 @@ const { addEmployee, addRole, addDepartment, viewEmployees, viewEmployeesByDepar
 
  function startPrompt() {
     console.log(`           
-    W                        
-   W   <|__<|"       Hank the Donkey (CED)
-  W     00==|" 
- W     / __,|-------------_
+      
+    W                          
+   W   <|__<|       Hank the Donkey (CED)
+  W     00==|
+ W     / __/|-------------_
 |_|===''/  |             /||
            |__  _____   / ||
              |||     |||  WW 
@@ -21,7 +22,9 @@ inquirer.prompt(start).then((answers) => {
     if (answers.action === 'View All Employees') {
         viewEmployees().then(startPrompt);
     } else if (answers.action === 'View Employees by Department') {
-        viewEmployeesByDepartment().then(startPrompt);    
+        viewEmployeesByDepartment().then(startPrompt);
+    } else if (answers.action === 'View Employees by Manager') {
+        viewEmployeesByManager().then(startPrompt);        
     } else if (answers.action === 'Add Employee') {
         addEmployee().then(startPrompt);
     } else if (answers.action === 'Update Employee Role') {

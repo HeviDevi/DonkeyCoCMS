@@ -121,6 +121,44 @@ const viewEmployees = async () => {
   }
 };
 
+const viewEmployeesByManager = async () => {
+  return new Promise((resolve, reject) => {
+    inquirer.prompt(viewEmployeesByManagerQ).then(async (answer) => {
+      let { manager_name } = answer;
+      let manager_id;
+      if (manager_name === "Hank the Donkey (CED)") {
+        manager_id = 1;
+      } else if (manager_name === "Rodger the Rooster (Sales Manager)") {
+        manager_id = 2;
+      } else if (manager_name === "Bruce the Bear (Marketing Manager)") {
+        manager_id = 4;
+      } else if (manager_name === "Molly the Mouse (Accounting Manager)") {
+        manager_id = 6;
+      } else if (manager_name === "Patricia the Pig (HR Manager)") {
+        manager_id = 7;
+      } else if (manager_name === "Gary the Goat (Legal Counsel)") {
+        manager_id = 9;
+      }
+      try {
+        console.log(
+          `Here are all of our employees who report to ${manager_name}:`
+        );
+        pool.query("SELECT * FROM employee WHERE manager_id = $1", [manager_id], (err, res) => {
+          if (err) {
+            console.error(err);
+            return;
+          }
+          console.table(res.rows);
+          resolve(); 
+        });
+      } catch (err) {
+        console.error(err);
+        reject(err);
+      }
+    });
+  });
+};
+
 //View employees by department
 async function viewEmployeesByDepartment() {
   return new Promise((resolve, reject) => {
